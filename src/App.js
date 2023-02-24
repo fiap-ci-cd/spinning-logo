@@ -1,11 +1,16 @@
 import logo from './logo.svg';
+import fiapLogo from './fiap-logo.png';
 import './App.css';
+import { withLDProvider, useFlags } from 'launchdarkly-react-client-sdk';
 
 function App() {
+  const { imageSwitch } = useFlags();
+  console.log("imageSwitch: " + imageSwitch);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        { imageSwitch ? <img src={ fiapLogo } className="App-logo" alt="logo" /> :
+        <img src={ logo } className="App-logo" alt="logo" /> }
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -22,4 +27,9 @@ function App() {
   );
 }
 
-export default App;
+export default withLDProvider({
+  clientSideID: '63efc2aefc4fae13633a6799',
+  options: {
+    bootstrap: 'localStorage',
+  },
+})(App);
