@@ -55,13 +55,9 @@ jobs:
         with:
           name: node-app
 
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
+      - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'spinning-logo-fiap'
+        with: 
+          app-name: spinning-logo-fiap
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./node-app.zip
